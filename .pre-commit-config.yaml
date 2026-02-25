@@ -1,5 +1,17 @@
-repos:
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.2
-    hooks:
-      - id: gitleaks
+cat <<EOF > .github/workflows/gitleaks.yml
+name: gitleaks
+on: [push, pull_request]
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install and Run Gitleaks
+        run: |
+          wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+          tar -zxvf gitleaks_8.18.2_linux_x64.tar.gz
+          ./gitleaks detect --source . -v --exit-code=2
+EOF

@@ -1,0 +1,9 @@
+[allowlist]
+description = "Exclure le README"
+paths = ['''README.md''']
+
+[[rules]]
+id = "my-corp-secret"
+description = "Détecte les clés API MyCorp"
+regex = '''MY_CORP_[a-zA-Z0-9_]+'''
+keywords = ["my_corp"]
